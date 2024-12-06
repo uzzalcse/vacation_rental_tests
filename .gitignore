@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info/
+dist/
+build/
+*.tar.gz
+*.zip
+
+# Test reports
+reports/
+*.xml
+*.html
+*.xlsx  # Ignore Excel test result files
+*.csv
+
+# Environment
+.env
+env/
+venv/
+.venv/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# IDE and Editor specific files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Log files
+*.log
+*.out
+
+# Operating system files
+.DS_Store
+Thumbs.db
