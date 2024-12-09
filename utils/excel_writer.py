@@ -1,26 +1,131 @@
-import pandas as pd
+# # import requests
+# # import os
+# # import pandas as pd
+# # from openpyxl import load_workbook
 
-def write_to_excel(filename, results_by_url):
-    with pd.ExcelWriter(filename, engine="xlsxwriter") as writer:
-        for url, results in results_by_url.items():
-            # Prepare the data for each URL in a dataframe
-            data = []
-            for result in results:
-                data.append({
-                    "Page URL": url,
-                    "Test Case": result["test_case"],
-                    "Status": result["status"],
-                    "Comments": result["comments"]
-                })
-            
-            # Extract a meaningful sheet name from the URL
-            # Ensure the URL has enough segments
-            url_parts = url.split("/")
-            if len(url_parts) > 4:
-                sheet_name = url_parts[4]  # Use the 5th part of the URL as the sheet name
+
+# # def save_results_to_excel(results, file_name="reports/test_results.xlsx", sheet_name="url status test"):
+# #     """
+# #     Saves test results to a specific sheet in an Excel file.
+# #     :param results: List of test results.
+# #     :param file_name: Path to the Excel file.
+# #     :param sheet_name: Name of the sheet to write results to.
+# #     """
+# #     # Ensure the 'reports' directory exists
+# #     os.makedirs(os.path.dirname(file_name), exist_ok=True)
+
+# #     # Convert results to a DataFrame
+# #     df = pd.DataFrame(results)
+
+# #     if os.path.exists(file_name):
+# #         # If the file exists, load it
+# #         with pd.ExcelWriter(file_name, engine="openpyxl", mode="a") as writer:
+# #             writer.book = load_workbook(file_name)
+# #             # If the sheet exists, remove it to overwrite the data
+# #             if sheet_name in writer.book.sheetnames:
+# #                 del writer.book[sheet_name]
+# #             df.to_excel(writer, index=False, sheet_name=sheet_name)
+# #     else:
+# #         # If the file doesn't exist, create it and write data
+# #         with pd.ExcelWriter(file_name, engine="openpyxl") as writer:
+# #             df.to_excel(writer, index=False, sheet_name=sheet_name)
+
+
+# import pandas as pd
+# import os
+# from openpyxl import load_workbook
+# from openpyxl.utils.exceptions import InvalidFileException
+
+# def save_results_to_excel(results, file_name="reports/test_results.xlsx", sheet_name="url status test"):
+#     """
+#     Saves test results to a specific sheet in an Excel file.
+#     :param results: List of test results.
+#     :param file_name: Path to the Excel file.
+#     :param sheet_name: Name of the sheet to write results to.
+#     """
+#     # Ensure the 'reports' directory exists
+#     os.makedirs(os.path.dirname(file_name), exist_ok=True)
+
+#     # Convert results to a DataFrame
+#     df = pd.DataFrame(results)
+
+#     try:
+#         # Try to load existing workbook
+#         book = load_workbook(file_name)
+#         with pd.ExcelWriter(file_name, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
+#             writer.book = book
+#             df.to_excel(writer, sheet_name=sheet_name, index=False)
+#     except (FileNotFoundError, InvalidFileException):
+#         # If file doesn't exist or is invalid, create new one
+#         df.to_excel(file_name, sheet_name=sheet_name, index=False)
+#     except Exception as e:
+#         # Handle any other exceptions
+#         print(f"Error writing to Excel: {str(e)}")
+#         # Create new file if there's any other error
+#         df.to_excel(file_name, sheet_name=sheet_name, index=False)
+
+import pandas as pd
+import os
+import time
+from openpyxl import load_workbook
+from openpyxl.utils.exceptions import InvalidFileException
+
+def save_results_to_excel(results, file_name="reports/test_results.xlsx", sheet_name="url status test", max_retries=3):
+    """
+    Saves test results to a specific sheet in an Excel file with retry mechanism.
+    :param results: List of test results.
+    :param file_name: Path to the Excel file.
+    :param sheet_name: Name of the sheet to write results to.
+    :param max_retries: Maximum number of retry attempts
+    """
+    # Ensure the 'reports' directory exists
+    os.makedirs(os.path.dirname(file_name), exist_ok=True)
+
+    # Convert results to a DataFrame
+    df = pd.DataFrame(results)
+    
+    for attempt in range(max_retries):
+        try:
+            # If file exists and is not empty
+            if os.path.exists(file_name) and os.path.getsize(file_name) > 0:
+                try:
+                    # Try to read existing file
+                    existing_df = pd.read_excel(file_name, sheet_name=None)
+                    
+                    # Create a new Excel file while preserving other sheets
+                    with pd.ExcelWriter(file_name, engine='openpyxl') as writer:
+                        # Write all existing sheets except the current one
+                        for existing_sheet in existing_df.keys():
+                            if existing_sheet != sheet_name:
+                                existing_df[existing_sheet].to_excel(writer, sheet_name=existing_sheet, index=False)
+                        # Write the new sheet
+                        df.to_excel(writer, sheet_name=sheet_name, index=False)
+                    return  # Success, exit function
+                except Exception as e:
+                    print(f"Error reading existing file: {str(e)}")
+                    # If error occurs, create new file with just this sheet
+                    df.to_excel(file_name, sheet_name=sheet_name, index=False)
+                    return
             else:
-                sheet_name = "Other"  # Default sheet name if not enough segments
-            
-            # Create a DataFrame and write it to a separate sheet
-            df = pd.DataFrame(data)
-            df.to_excel(writer, sheet_name=sheet_name, index=False)
+                # If file doesn't exist or is empty, create new
+                df.to_excel(file_name, sheet_name=sheet_name, index=False)
+                return  # Success, exit function
+                
+        except Exception as e:
+            if attempt < max_retries - 1:  # if not the last attempt
+                print(f"Attempt {attempt + 1} failed: {str(e)}")
+                time.sleep(1)  # Wait before retrying
+                # If file is corrupted, remove it and try again
+                if os.path.exists(file_name):
+                    try:
+                        os.remove(file_name)
+                    except Exception:
+                        pass
+            else:
+                print(f"Final attempt failed: {str(e)}")
+                # On final attempt, try to create new file with just this sheet
+                try:
+                    df.to_excel(file_name, sheet_name=sheet_name, index=False)
+                except Exception as final_e:
+                    print(f"Could not create new file: {str(final_e)}")
+                    raise

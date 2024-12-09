@@ -1,6 +1,54 @@
-def scrape_script_data(driver, url, country_code, ip):
-    driver.get(url)
-    # Logic for scraping script data
-    status = "Pass"  # Replace with actual test logic
-    comments = "Script data scraped successfully"  # Replace with actual comments
-    return {"test_case": "Script Data Scraping", "status": status, "comments": comments}
+import time
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+def scrape_script_data(url, driver):
+    """
+    Scrapes required data (SiteURL, CampaignID, SiteName, Browser, CountryCode, IP)
+    from the JavaScript object on the given URL and returns results.
+
+    :param url: URL of the page to scrape.
+    :return: List of test results.
+    """
+    results = []  # Initialize result list
+
+    try:
+        # Open the target webpage
+        driver.get(url)
+
+        # Wait for the page to load
+        time.sleep(3)
+
+        # Get scriptData from JavaScript on the page
+        script_data = driver.execute_script("return window.ScriptData;")
+
+        # Extracting required fields from ScriptData
+        if script_data:
+            site_url = script_data['config']['SiteUrl']  # Site URL from config
+            site_name = script_data['config']['SiteName']  # Site name from config
+            campaign_id = script_data['pageData'].get('CampaignId', 'Not found')  # Campaign ID from pageData
+            user_info = script_data.get('userInfo', {})
+            browser = user_info.get('Browser', 'Not found')  # Browser from userInfo
+            country_code = user_info.get('CountryCode', 'Not found')  # CountryCode from userInfo
+            ip = user_info.get('IP', 'Not found')  # IP from userInfo
+
+            # Store the results
+            results.append({
+                'SiteURL': site_url,
+                'CampaignID': campaign_id,
+                'SiteName': site_name,
+                'Browser': browser,
+                'CountryCode': country_code,
+                'IP': ip,
+            })
+
+        else:
+            print(f"No ScriptData found on {url}")
+
+    except Exception as e:
+        print(f"Error processing {url}: {e}")
+    finally:
+        driver.quit()
+
+    return results
