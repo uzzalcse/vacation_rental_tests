@@ -11,6 +11,8 @@ from tests.test_image_alt import image_alt_attribute_test  # Assuming this is in
 from tests.test_h1_tag import test_h1
 from tests.test_tags_sequence import test_heading_sequence
 from tests.test_script_data import scrape_script_data
+from tests.test_currency import test_currency_filtering
+
 
 def get_driver_path():
     """
@@ -116,10 +118,25 @@ def run_scrape_data(url, driver_path=None, headless=False):
         # Run the script data scraping test
         results = scrape_script_data(url, driver)
         
-        print(results)
-        
         # Save results to Excel
         save_results_to_excel(results, sheet_name="Scrape script data test")
+    finally:
+        # Close the Selenium driver
+        driver.quit()
+
+
+def run_test_currency_filtering(url, driver_path=None, headless=False):
+    if not driver_path:
+        driver_path = get_driver_path()
+    
+    driver = get_chrome_driver(driver_path, headless)
+    
+    try:
+        # Run the script data scraping test
+        results = test_currency_filtering(url, driver)
+                
+        # Save results to Excel
+        save_results_to_excel(results, sheet_name="Currency filtering test")
     finally:
         # Close the Selenium driver
         driver.quit()
