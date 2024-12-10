@@ -23,7 +23,7 @@ def test_h1(urls, driver):
                 results.append({
                     "page_url": page_url,
                     "testcase": "Check H1 tag presence",
-                    "passed_fail": "Pass",
+                    " passed/fail": "Pass",
                     "comments": f"Found H1 tag with text: {h1_tag.text}"
                 })
             except NoSuchElementException:
@@ -31,7 +31,7 @@ def test_h1(urls, driver):
                 results.append({
                     "page_url": page_url,
                     "testcase": "Check H1 tag presence",
-                    "passed_fail": "Fail",
+                    " passed/fail": "Fail",
                     "comments": "H1 tag not found on the page"
                 })
 

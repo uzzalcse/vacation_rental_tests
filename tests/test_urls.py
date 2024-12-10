@@ -17,14 +17,14 @@ def test_url_status(hrefs):
                 results.append({
                     'page_url': href,
                     'testcase': 'URL Status Code Test',
-                    'passed_fail': 'fail',
+                    ' passed/fail': 'Fail',
                     'comments': '404 Error'
                 })
             else:
                 results.append({
                     'page_url': href,
                     'testcase': 'URL Status Code Test',
-                    'passed_fail': 'pass',
+                    ' passed/fail': 'Pass',
                     'comments': 'URL is valid'
                 })
         except requests.exceptions.RequestException as e:
@@ -32,7 +32,7 @@ def test_url_status(hrefs):
             results.append({
                 'page_url': href,
                 'testcase': 'URL Status Code Test',
-                'passed_fail': 'fail',
+                ' passed/fail': 'Fail',
                 'comments': f'Error: {e}'
             })
     

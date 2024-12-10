@@ -19,9 +19,9 @@ def image_alt_attribute_test(urls, driver):
 
             if len(images) == 0:
                 results.append({
-                    "page_url": page_url,
+                    "image_url": page_url,
                     "testcase": "Image alt attribute test",
-                    "passed_fail": "fail",
+                    "passed_fail": "Fail",
                     "comments": "No images found"
                 })
                 continue
@@ -35,16 +35,16 @@ def image_alt_attribute_test(urls, driver):
                 # Check if alt is missing or empty
                 if alt_value is None or alt_value.strip() == "":
                     result = {
-                        "page_url": image_url,  # Set image URL as the test URL
+                        "image_url": image_url,  # Set image URL as the test URL
                         "testcase": "Image alt attribute test",
-                        "passed_fail": "fail",
+                        " passed/fail": "Fail",
                         "comments": "Missing alt attribute",
                     }
                 else:
                     result = {
-                        "page_url": image_url,  # Set image URL as the test URL
+                        "image_url": image_url,  # Set image URL as the test URL
                         "testcase": "Image alt attribute test",
-                        "passed_fail": "pass",
+                        " passed/fail": "Pass",
                         "comments": "Alt attribute present",
                     }
 
@@ -53,9 +53,9 @@ def image_alt_attribute_test(urls, driver):
 
         except Exception as e:
             results.append({
-                "page_url": page_url,
+                "image_url": page_url,
                 "testcase": "Image alt attribute test",
-                "passed_fail": "fail",
+                " passed/fail": "Fail",
                 "comments": f"Error: {e}",
             })
 
