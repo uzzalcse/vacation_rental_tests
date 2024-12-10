@@ -25,6 +25,7 @@ def get_driver_path():
         raise Exception("Unsupported OS. This script supports only Windows and Linux.")
 
 def run_h1_test(page_url, driver_path=None, headless=False):
+    print("h1 test started...")
     if not driver_path:
         driver_path = get_driver_path()
     
@@ -42,9 +43,11 @@ def run_h1_test(page_url, driver_path=None, headless=False):
         save_results_to_excel(results, sheet_name="H1 tag test")
     finally:
         # Close Selenium driver
+        print("h1 test ended.")
         driver.quit()
 
 def run_heading_sequence_test(url, driver_path=None, headless=False):
+    print("heading sequence test started...")
     if not driver_path:
         driver_path = get_driver_path()
     
@@ -58,9 +61,11 @@ def run_heading_sequence_test(url, driver_path=None, headless=False):
         save_results_to_excel(results, sheet_name="Heading tag sequence test")
     finally:
         # Close the Selenium driver
+        print("heading sequence test ended.")
         driver.quit()
 
 def run_image_alt_test(page_url, driver_path=None, headless=False):
+    print("image alt test started...")
     if not driver_path:
         driver_path = get_driver_path()
     
@@ -79,9 +84,11 @@ def run_image_alt_test(page_url, driver_path=None, headless=False):
         save_results_to_excel(results, sheet_name="Image alt attribute test")
     finally:
         # Close Selenium driver
+        print("image alt test ended.")
         driver.quit()
 
 def run_url_test(page_url, driver_path=None, headless=False):
+    print("url test started...")
     if not driver_path:
         driver_path = get_driver_path()
     
@@ -104,9 +111,11 @@ def run_url_test(page_url, driver_path=None, headless=False):
         save_results_to_excel(results, sheet_name="URL status test")
     finally:
         # Close Selenium driver
+        print("url test ended.")
         driver.quit()
 
 def run_scrape_data(url, driver_path=None, headless=False):
+    print("scrape data test started...")
     if not driver_path:
         driver_path = get_driver_path()
     
@@ -120,10 +129,12 @@ def run_scrape_data(url, driver_path=None, headless=False):
         save_results_to_excel(results, sheet_name="Scrape script data test")
     finally:
         # Close the Selenium driver
+        print("scrape data test ended.")
         driver.quit()
 
 
 def run_test_currency_filtering(url, driver_path=None, headless=False):
+    print("currency filtering test started...")
     if not driver_path:
         driver_path = get_driver_path()
     
@@ -137,4 +148,5 @@ def run_test_currency_filtering(url, driver_path=None, headless=False):
         save_results_to_excel(results, sheet_name="Currency filtering test")
     finally:
         # Close the Selenium driver
+        print("currency filtering test ended.")
         driver.quit()
