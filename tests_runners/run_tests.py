@@ -15,9 +15,7 @@ from tests.test_currency import test_currency_filtering
 
 
 def get_driver_path():
-    """
-    Returns the appropriate path to the ChromeDriver based on the operating system.
-    """
+
     # Check the operating system
     if os.name == 'posix':  # Linux or macOS
         return './chromedriver'  # Assuming chromedriver is in the project root for Linux

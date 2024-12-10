@@ -4,12 +4,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 
 def test_heading_sequence(url, driver):
-    """
-    Validates the H1-H6 heading sequence for a single URL.
-    :param url: URL to test.
-    :param driver: Selenium WebDriver instance.
-    :return: List of test results.
-    """
+
     results = []  # Initialize a list to store test results
 
     try:

@@ -5,13 +5,7 @@ from openpyxl import load_workbook
 from openpyxl.utils.exceptions import InvalidFileException
 
 def save_results_to_excel(results, file_name="reports/test_results.xlsx", sheet_name="url status test", max_retries=3):
-    """
-    Saves test results to a specific sheet in an Excel file with retry mechanism.
-    :param results: List of test results.
-    :param file_name: Path to the Excel file.
-    :param sheet_name: Name of the sheet to write results to.
-    :param max_retries: Maximum number of retry attempts
-    """
+
     # Ensure the 'reports' directory exists
     os.makedirs(os.path.dirname(file_name), exist_ok=True)
 

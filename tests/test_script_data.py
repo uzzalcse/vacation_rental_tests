@@ -4,13 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 def scrape_script_data(url, driver):
-    """
-    Scrapes required data (SiteURL, CampaignID, SiteName, Browser, CountryCode, IP)
-    from the JavaScript object on the given URL and returns results.
-
-    :param url: URL of the page to scrape.
-    :return: List of test results.
-    """
+    
     results = []  # Initialize result list
 
     try:

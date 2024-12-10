@@ -5,13 +5,6 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
 def test_h1(urls, driver):
-    """
-    Tests if the H1 tag is present on a list of URLs.
-    
-    :param urls: List of URLs to test.
-    :param driver: Selenium WebDriver instance.
-    :return: List of test results.
-    """
     # Initialize result list
     results = []
 

@@ -3,12 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
 def image_alt_attribute_test(urls, driver):
-    """
-    Tests if images on a list of URLs have the 'alt' attribute.
-    :param urls: List of URLs to test.
-    :param driver: Selenium WebDriver instance.
-    :return: List of test results.
-    """
+    
     results = []  # Initialize a list to store test results
 
     for page_url in urls:

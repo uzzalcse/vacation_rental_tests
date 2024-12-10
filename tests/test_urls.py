@@ -5,11 +5,7 @@ from openpyxl import load_workbook
 
 
 def test_url_status(hrefs):
-    """
-    Tests the HTTP status of a list of URLs.
-    :param hrefs: List of URLs to test.
-    :return: List of test results.
-    """
+
     results = []
     
     for href in hrefs:

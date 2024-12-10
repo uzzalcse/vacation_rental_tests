@@ -4,12 +4,7 @@ from selenium.webdriver.chrome.options import Options
 
 
 def get_chrome_driver(driver_path="./chromedriver", headless=False):
-    """
-    Configures and returns a Chrome WebDriver instance.
-    :param driver_path: Path to the ChromeDriver executable.
-    :param headless: Run Chrome in headless mode (default: False).
-    :return: Configured WebDriver instance.
-    """
+
     # Ensure ChromeDriver path is executable
     service = Service(driver_path)
     
