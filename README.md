@@ -11,10 +11,37 @@ This project automates the testing of a vacation rental details page (https://ww
 - Currency filter functionality
 - Scraping of script data and storing it in an Excel file
 
-The results of each test are recorded in an excel file with the following format:
 
-| page_url  | testcase | passed/fail | comments |
-|-----------|----------|-------------|----------|
+
+# Project Structure 
+
+📁 vacation_rental_tests/  
+├── 📁 reports/  
+│   └──── 📄 test_results.xlsx  
+│
+├── 📁 tests/  
+│   ├── 📄 __init__.py  
+│   ├── 📄 test_currency.py  
+│   ├── 📄 test_h1_tag.py  
+│   ├── 📄 test_image_al.py  
+│   ├── 📄 test_script_data.py  
+│   ├── 📄 test_tags_sequence.py  
+│   ├── 📄 test_urls.py  
+│
+├── 📁 tests_runners/  
+│   └── 📄 run_tests.py  
+│
+├── 📁 utils/  
+│   ├── 📄 __init__.py  
+│   ├── 📄 excel_writer.py  
+│
+├── 📄 __init__.py  
+├── 📄 main.py  
+├── 📄 chrome_driver_config.py  
+├── 📄 README.md  
+├── 📄 requirements.txt  
+└── 📄 .gitignore  
+
 
 ## Requirements
 
@@ -90,7 +117,24 @@ python main.py
 
 #### To see results check `reports/test_results.xlsx` file. 
 
-Change the sheets on excel file ( `test_results.xlsx` ) to see results for each tests.
+Change the sheets on excel file ( `test_results.xlsx` ) to see results for each tests. For better performance go to `main.py` and run only required tests. Make comment and uncomment others.  
+This way you can change `main.py` and see the specific tests.
+```
+if __name__ == "__main__":
+    page_url = "https://www.alojamiento.io/"
+
+    run_h1_test(page_url)
+    #run_heading_sequence_test(page_url)
+    #run_image_alt_test(page_url)
+    #run_url_test(page_url)   
+    run_scrape_data(page_url)
+    #run_test_currency_filtering(page_url)
+```
+
+The results of each test are recorded in the excel file with the following format:
+
+| page_url  | testcase | passed/fail | comments |
+|-----------|----------|-------------|----------|
 
 ## Test Cases
 
