@@ -1,19 +1,17 @@
-# Vacation Rental Home Page Automation Testing
+# Vacation Rental Homepage Automation Testing
 
 ## Description
 
-This project automates the testing of a vacation rental details page (https://www.alojamiento.io/) to validate key elements and functionalities. The script checks several SEO-related test cases such as:
+This project automates the testing of a vacation rental details page ([https://www.alojamiento.io/](https://www.alojamiento.io/)) to validate key elements and functionalities. It performs the following key tests for SEO and functionality:
 
-- H1 tag existence
-- HTML tag sequence validation (H1-H6)
-- Image alt attribute validation
-- URL status code validation (404 check)
-- Currency filter functionality
-- Scraping of script data and storing it in an Excel file
+- Verifies the existence of the `<h1>` tag.
+- Ensures proper HTML heading tag sequence (`<h1>` to `<h6>`).
+- Validates the presence of `alt` attributes in images.
+- Checks URL status codes (e.g., 404 errors).
+- Tests the functionality of the currency filter.
+- Scrapes and records relevant script data into an Excel file.
 
-
-
-# Project Structure 
+## Project Structure
 
 📁 vacation_rental_tests/  
 ├── 📁 reports/  
@@ -40,86 +38,86 @@ This project automates the testing of a vacation rental details page (https://ww
 ├── 📄 chrome_driver_config.py  
 ├── 📄 README.md  
 ├── 📄 requirements.txt  
-└── 📄 .gitignore  
-
+└── 📄 .gitignore
 
 ## Requirements
+
+### Prerequisites
 
 - Python 3.x
 - Selenium WebDriver
 - Google Chrome (minimum version: 131.0.6778.108)
 - Pandas
-- openpyxl
+- Openpyxl
 
 ### Libraries
 
 - **Selenium**: For web automation.
 - **Pandas**: For recording test results into a CSV file.
-- **WebDriver**: Google Chrome
+- **ChromeDriver**: Google Chrome WebDriver for running Selenium tests.
 
-### Installation
+## Setup & Installation
 
-#### Clone the project repository
+### Clone the Repository
 
-```
+```bash
 git clone https://github.com/uzzalcse/vacation_rental_tests.git
-
 ```
 
-#### Go to the project directory 
+### Navigate to the Project Directory
 
-```
+```bash
 cd vacation_rental_tests
-
 ```
 
-#### Creating virtual environment 
+### Create a Virtual Environment
 
-```
+```bash
 python3 -m venv venv
-
 ```
-#### If the previous (for creating virtual environment) command does not work 
 
-```
+#### If the Above Command Fails
+
+```bash
 python -m venv venv
-
 ```
 
-#### Go to the virtual environment
-##### In Windows
-```
+### Activate the Virtual Environment
+
+#### On Windows
+
+```bash
 venv\Scripts\activate
-
 ```
 
-###### In Mac/Linux
+#### On Mac/Linux
 
-```
+```bash
 source venv/bin/activate
-
 ```
 
+### Install Dependencies
 
-#### Now install  dependencies in virtual environment
-
-```
+```bash
 pip install -r requirements.txt
-
 ```
 
-#### Now write the following command to run the project 
+### Run the Project
 
-```
+```bash
 python main.py
-
 ```
 
-#### To see results check `reports/test_results.xlsx` file. 
+### View Results
 
-Change the sheets on excel file ( `test_results.xlsx` ) to see results for each tests. For better performance go to `main.py` and run only required tests. Make comment and uncomment others.  
-This way you can change `main.py` and see the specific tests.
-```
+- Test results will be saved in the `reports/test_results.xlsx` file.
+- Each test's results are saved in separate sheets.
+
+### Customize Tests
+
+To run specific tests, edit `main.py` and commnet or uncomment the desired tests:
+
+```python
 if __name__ == "__main__":
     page_url = "https://www.alojamiento.io/"
 
@@ -131,33 +129,70 @@ if __name__ == "__main__":
     #run_test_currency_filtering(page_url)
 ```
 
-The results of each test are recorded in the excel file with the following format:
-
-| page_url  | testcase | passed/fail | comments |
-|-----------|----------|-------------|----------|
-
 ## Test Cases
 
 ### 1. **H1 Tag Existence**
-- **Description:** Verifies that the page contains an `<h1>` tag. If missing, the test fails.
-- **Test Details:** Ensures that the most important heading tag exists for SEO and accessibility.
+- **Purpose**: Verifies the presence of an `<h1>` tag for SEO and accessibility.
+- **Validation**: Fails if the `<h1>` tag is missing.
 
 ### 2. **HTML Tag Sequence**
-- **Description:** Ensures the HTML tag sequence from `<h1>` to `<h6>` is followed correctly.
-- **Test Details:** If any tag is missing or out of sequence, the test fails. This ensures proper use of heading tags for SEO.
+- **Purpose**: Ensures the correct sequence of HTML heading tags (`<h1>` to `<h6>`).
+- **Validation**: Fails if any tag is missing or out of sequence.
 
 ### 3. **Image Alt Attribute**
-- **Description:** Checks if all images on the page contain the `alt` attribute.
-- **Test Details:** If any image is missing an `alt` attribute, the test fails. This is important for accessibility and SEO.
+- **Purpose**: Checks that all images contain the `alt` attribute for SEO and accessibility.
+- **Validation**: Fails if any image is missing an `alt` attribute.
 
 ### 4. **URL Status Code Check**
-- **Description:** Verifies that all URLs on the page return a valid status code (anything other than 404).
-- **Test Details:** If a 404 error is found, the test fails. This ensures that all external and internal links on the page are working correctly.
+- **Purpose**: Verifies that all URLs on the page return valid status codes (e.g., no 404 errors).
+- **Validation**: Fails if any URL returns a 404 error.
 
 ### 5. **Currency Filtering**
-- **Description:** Tests if the currency filter on the page works correctly.
-- **Test Details:** Ensures that the currency on property tiles changes when the user selects a new currency, confirming that the currency filter functionality is operational.
+- **Purpose**: Tests if the currency filter works as expected.
+- **Validation**: Ensures that selecting a currency updates the displayed prices accordingly.
 
 ### 6. **Script Data Scraping**
-- **Description:** Scrapes the script data from the page.
-- **Test Details:** Extracts data such as SiteURL, CampaignID, SiteName, Browser, CountryCode, and IP, and records it into an Excel file for reporting.
+- **Purpose**: Extracts key script data from the page, such as:
+  - SiteURL
+  - CampaignID
+  - SiteName
+  - Browser
+  - CountryCode
+  - IP
+- **Validation**: Saves the extracted data into the Excel report.
+
+## Result Format
+
+The results are recorded in `reports/test_results.xlsx` in the following format:
+
+| Page URL       | Test Case Name        | Result (Pass/Fail) | Comments           |
+|----------------|-----------------------|--------------------|--------------------|
+
+## Notes
+
+- Ensure that you have the latest version of ChromeDriver compatible with your Google Chrome browser.
+- If you encounter issues, check the `chrome_driver_config.py` file for configuration settings.
+- Modify `main.py` to run only the necessary tests for efficiency.
+
+
+
+## Contribution
+
+We welcome contributions to improve the project! If you would like to contribute:
+
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature-branch-name`.
+3. Commit your changes: `git commit -m 'Add your message here'`.
+4. Push to the branch: `git push origin feature-branch-name`.
+5. Submit a pull request.
+
+Please ensure your code adheres to the project's coding standards and includes appropriate tests.
+
+
+## Contact
+
+For questions or support, please reach out:
+
+- **Author**: Uzzal Mia
+- **Email**: uzzal.cse42@gmail.com 
+- **GitHub**: [uzzalcse](https://github.com/uzzalcse)
